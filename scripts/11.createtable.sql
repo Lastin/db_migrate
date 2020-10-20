@@ -1,0 +1,1 @@
+INSERT INTO ecs.testTable VALUES("11.createtable.sql");
