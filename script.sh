@@ -74,14 +74,11 @@ run_script () {
     if [ -z $result ]; then
         success "Migration $2 ran successfully."
         update_version $2
-
     fi
 }
 
 run_scripts () {
     # avoids splitting for loop by space
-    declare -A scripts
-    versions=()
     IFS=$(echo -en "\n\b")
     for file in $(ls $DIRECTORY/ | sort -n)
     do
@@ -90,7 +87,7 @@ run_scripts () {
             if [ "$version" -gt $CURRENT_VERSION ]; then
                 run_script "$DIRECTORY/$file" $version
             else
-                warn "Skipping script $file. Version lower than current database"
+                warn "Skipping script $file. Version lower or equal to current database version. (Current version: $CURRENT_VERSION)"
             fi
         else
             err "File $file has invalid name pattern"
